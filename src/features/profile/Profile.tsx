@@ -1,10 +1,12 @@
+import { Nav } from 'react-bootstrap';
+
 function Profile() {
     return (
-        <ul className="navbar-nav d-flex">
-            <li className="nav-item">
-                <a className="nav-link">Login</a>
-            </li>
-        </ul>
+        <Nav as="ul">
+            <Nav.Item as="li">
+                <Nav.Link href="/api/login" target="_blank">Login</Nav.Link>
+            </Nav.Item>
+        </Nav>
     );
 }
 
