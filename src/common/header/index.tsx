@@ -1,8 +1,8 @@
+import { FunctionComponent } from 'react';
 import { Navbar, Container, Nav } from 'react-bootstrap'
 import Profile from '../../features/profile/Profile';
 
-function Header() {
-    return (
+const Header: FunctionComponent = () => (
         <Navbar bg="dark" variant="dark" expand="lg">
             <Container fluid>
                 <Navbar.Brand href="/">Drako LIVE</Navbar.Brand>
@@ -16,6 +16,6 @@ function Header() {
             </Container>
         </Navbar>
     );
-}
+Header.displayName = "Header";
 
 export default Header;
