@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
-import Header from "./common/header/index";
-import Chat from "./features/chat/Chat";
-import Video from "./features/video/Video";
+import Header from "../common/header/index";
+import Chat from "../features/chat/Chat";
+import Video from "../features/video/Video";
 
 const App: FunctionComponent = () => (
   <div className="m-0 p-0 h-100 d-md-flex flex-column">

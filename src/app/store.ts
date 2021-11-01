@@ -1,7 +1,12 @@
-import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
+import { combineReducers, configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
+import profile from "../features/profile/profileSlice";
+
+const rootReducer = combineReducers({
+  profile,
+});
 
 export const store = configureStore({
-  reducer: {},
+  reducer: rootReducer,
 });
 
 export type AppDispatch = typeof store.dispatch;
