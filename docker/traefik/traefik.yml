@@ -37,4 +37,4 @@ http:
     to-backend:
       loadBalancer:
         servers:
-          - url: "https://drako-test-backend.trumpi.co.za"
+          - url: "https://drako-test-api.trumpi.co.za"
