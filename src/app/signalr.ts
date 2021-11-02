@@ -14,7 +14,8 @@ const connection = new HubConnectionBuilder()
 const callbacks = withCallbacks()
     .add('CurrencyUpdated', (lastTransactionId: number, balance: number) => (dispatch) => {
         dispatch(updateBalance({
-            balance: balance
+            balance: balance,
+            lastTransactionId: lastTransactionId
         } as Profile));
     });
 
