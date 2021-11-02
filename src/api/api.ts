@@ -31,3 +31,7 @@ export async function fetchProfile(): Promise<Profile> {
 
   return returnValue;
 }
+
+export async function postPresence() {
+    await axios.post(baseUrl + "presence");
+}
