@@ -1,0 +1,40 @@
+## STATIC CONFIGURATION
+log:
+  level: INFO
+
+api:
+  insecure: true
+  dashboard: true
+
+entryPoints:
+  web:
+    address: ":8082"
+
+providers:
+  file:
+    filename: "traefik.yml"
+
+
+## DYNAMIC CONFIGURATION
+http:
+  routers:
+    to-local-ip:
+      rule: "Host(`localhost`)"
+      service: to-local-ip
+      entryPoints:
+        - web
+    to-backend:
+      rule: "Host(`localhost`) && PathPrefix(`/api`)"
+      service: to-backend
+      entryPoints:
+        - web
+
+  services:
+    to-local-ip:
+      loadBalancer:
+        servers:
+          - url: "http://172.17.0.1:3000"
+    to-backend:
+      loadBalancer:
+        servers:
+          - url: "https://drako-test-api.trumpi.co.za"
