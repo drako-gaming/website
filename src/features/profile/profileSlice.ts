@@ -7,7 +7,7 @@ const initialState: Profile = {
   isAuthenticated: false,
   displayName: "",
   balance: 0,
-  lastTransactionId: 0
+  lastTransactionId: 0,
 };
 
 const profileSlice = createSlice({
@@ -19,12 +19,12 @@ const profileSlice = createSlice({
     },
     updateBalance(state, action: PayloadAction<Profile>) {
       if (action.payload.lastTransactionId <= state.lastTransactionId) {
-          return state;
+        return state;
       }
       return {
         ...state,
         balance: action.payload.balance,
-        lastTransactionId: action.payload.lastTransactionId
+        lastTransactionId: action.payload.lastTransactionId,
       };
     },
   },

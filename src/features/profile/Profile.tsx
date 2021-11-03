@@ -4,13 +4,12 @@ import { Nav, Navbar } from "react-bootstrap";
 import { RootState } from "../../app/store";
 
 const Profile: FunctionComponent = () => {
-
   const profile = useSelector((state: RootState) => state.profile);
 
   if (profile.isAuthenticated) {
     return (
       <Navbar.Text>
-            Scales: {profile.balance} {"|"} {profile.displayName} {"|"} <a href="/api/logout">Logout</a>
+        Scales: {profile.balance} {"|"} {profile.displayName} {"|"} <a href="/api/logout">Logout</a>
       </Navbar.Text>
     );
   } else {

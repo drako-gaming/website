@@ -9,7 +9,9 @@ const Header: FunctionComponent = () => (
       <Navbar.Toggle aria-controls="navbar-collapse" />
       <Navbar.Collapse id="navbar-collapse">
         <Nav className="me-auto">
-          <Nav.Link href="https://www.twitch.tv/subs/drako" target="_blank">Subscribe</Nav.Link>
+          <Nav.Link href="https://www.twitch.tv/subs/drako" target="_blank">
+            Subscribe
+          </Nav.Link>
         </Nav>
         <Profile />
       </Navbar.Collapse>

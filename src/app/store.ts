@@ -1,6 +1,6 @@
 import { combineReducers, configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import profile from "../features/profile/profileSlice";
-import { signal } from './signalr';
+import { signal } from "./signalr";
 
 const rootReducer = combineReducers({
   profile,
