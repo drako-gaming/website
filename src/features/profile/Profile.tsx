@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from "react";
+import AnimatedNumber from "react-animated-number";
 import { useSelector } from "react-redux";
 import { Nav, Navbar } from "react-bootstrap";
 import { RootState } from "../../app/store";
@@ -8,9 +9,18 @@ const Profile: FunctionComponent = () => {
 
   if (profile.isAuthenticated) {
     return (
-      <Navbar.Text>
-        Scales: {profile.balance} {"|"} {profile.displayName} {"|"} <a href="/api/logout">Logout</a>
-      </Navbar.Text>
+      <div className="d-flex flex-row navbar-nav">
+          <Navbar.Text>
+            Scales:
+          </Navbar.Text>
+          <AnimatedNumber className="navbar-text px-1" value={profile.balance} duration={1500} stepPrecision={0} />
+          <Navbar.Text>|</Navbar.Text>
+          <Navbar.Text className="px-1">
+            {profile.displayName}
+          </Navbar.Text>
+          <Navbar.Text>|</Navbar.Text>
+          <a href="/api/logout" className="nav-link px-1">Logout</a>
+      </div>
     );
   } else {
     return (
