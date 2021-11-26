@@ -1,9 +1,10 @@
 import { combineReducers, configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import profile from "../features/profile/profileSlice";
+import betting from "../features/betting/bettingSlice";
 import { signal } from "./signalr";
 
 const rootReducer = combineReducers({
-  profile,
+  profile, betting
 });
 
 export const store = configureStore({

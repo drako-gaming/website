@@ -31,3 +31,11 @@ export async function fetchProfile(): Promise<Profile> {
 export async function postPresence() {
   await axios.post(baseUrl + "presence");
 }
+
+export async function fetchCurrentBettingGame() {
+  const response = await axios.get(baseUrl + "betting");
+
+  if(response.status === 200) {
+    return response.data;
+  }
+}
