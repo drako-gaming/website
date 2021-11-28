@@ -1,15 +1,27 @@
 export interface BettingGameOption {
   description: string;
-  id: number;
-  total: number;
-};
+  id?: string;
+  total?: number;
+}
 
 export interface BettingGame {
-  id: number|null;
-  objective: string|null;
+  id?: string;
+  objective: string;
   options: BettingGameOption[];
-  status: string;
-  winningOption: number|null;
-  total: number;
-  alreadyBet: boolean;
-};
+  status?: string;
+  winningOption?: number;
+  total?: number;
+  alreadyBet?: boolean;
+}
+
+export interface Bet {
+  id: string;
+  displayName: string;
+  amountWagered: number;
+  amountAwarded: number;
+}
+
+export interface BetStore {
+  game: BettingGame;
+  bets: Bet[];
+}

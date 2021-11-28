@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk, AppDispatch } from "../../app/store";
 import { Profile } from "./types";
 import { fetchProfile } from "../../api/api";
+import { loadBetting } from "../betting/bettingSlice";
 
 const initialState: Profile = {
   isAuthenticated: false,
@@ -33,6 +34,7 @@ const profileSlice = createSlice({
 export const loadProfile = (): AppThunk => async (dispatch: AppDispatch) => {
   const profile = await fetchProfile();
   dispatch(profileSlice.actions.updateProfile(profile));
+  dispatch(loadBetting());
 };
 
 export const { updateProfile, updateBalance } = profileSlice.actions;

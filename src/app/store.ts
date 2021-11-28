@@ -4,7 +4,8 @@ import betting from "../features/betting/bettingSlice";
 import { signal } from "./signalr";
 
 const rootReducer = combineReducers({
-  profile, betting
+  profile,
+  betting,
 });
 
 export const store = configureStore({
