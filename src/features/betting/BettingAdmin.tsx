@@ -46,17 +46,17 @@ const BettingAdmin: FunctionComponent = () => {
           </h1>
           <p className="lead">{betting.game.objective}</p>
           <h2>
-            <AnimatedNumber className="navbar-text px-1" value={betting.game.total} duration={1500} stepPrecision={0} />
+            <AnimatedNumber className="fs-1" value={betting.game.total} duration={1500} stepPrecision={0} />
           </h2>
           <p>scales wagered</p>
           <form>
             <div className="mb-3">
-              <button className="btn btn-primary" onClick={() => dispatch(closeBetting(betting.game.id!))}>
+              <button className="btn btn-primary w-100" onClick={() => dispatch(closeBetting(betting.game.id!))}>
                 Close betting
               </button>
             </div>
             <div className="mb-3">
-              <button className="btn btn-danger" disabled={true}>
+              <button className="btn btn-danger w-100" disabled={true}>
                 Cancel betting
               </button>
             </div>
@@ -96,19 +96,30 @@ const BettingAdmin: FunctionComponent = () => {
       );
 
     case "Done":
-      const winners = betting.bets.map((item) => (
-        <tr key={item.id}>
-          <td>{item.displayName}</td>
-          <td>{item.amountWagered}</td>
-          <td>{item.amountAwarded}</td>
+      const winners = betting.bets.map((item, i) => (
+        <tr key={item.userTwitchId}>
+          <td>{i + 1}</td>
+          <td>{item.userTwitchDisplayName}</td>
+          <td>{item.amount}</td>
+          <td>{item.awarded}</td>
         </tr>
       ));
       return (
         <div className="text-center">
           <h1>Betting is done</h1>
           <p className="lead">{betting.game.objective}</p>
-          <table className="table table-borderless">
-            <tbody>{winners}</tbody>
+          <table className="table table-sm">
+                <thead>
+                    <tr>
+                    <td>Rank</td>
+                    <td>Name</td>
+                    <td>Scales Spent</td>
+                    <td>Scales Won</td>
+                    </tr>
+                </thead>
+            <tbody>
+                {winners}
+            </tbody>
           </table>
           <form>
             <div className="mb-3">

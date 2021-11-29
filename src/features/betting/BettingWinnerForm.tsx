@@ -23,7 +23,7 @@ const BettingWinnerForm: FunctionComponent<BettingWinnerFormProps> = ({ onCls })
     onCls();
   };
 
-  const options = betting.game.options.map((item, i) => (
+  const options = betting.game.options.map((item) => (
     <div className="row mb-3" key={item.id!.toString()}>
       <div className="col">
         <input type="radio" className="btn-check w-100" value={item.id} id={item.id} {...register("winner")} />

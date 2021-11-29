@@ -15,10 +15,10 @@ export interface BettingGame {
 }
 
 export interface Bet {
-  id: string;
-  displayName: string;
-  amountWagered: number;
-  amountAwarded: number;
+  userTwitchId: string;
+  userTwitchDisplayName: string;
+  amount: number;
+  awarded: number;
 }
 
 export interface BetStore {
