@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useForm, useFormState } from "react-hook-form";
 import { BettingGame } from "./types";
 import { openBetting } from "./bettingSlice";
-import {ErrorMessage} from "@hookform/error-message";
+import { ErrorMessage } from "@hookform/error-message";
 
 interface BettingOpenFormProps {
   onCls: () => void;
@@ -17,7 +17,13 @@ type Inputs = {
 
 const BettingOpenForm: FunctionComponent<BettingOpenFormProps> = ({ onCls }) => {
   const dispatch = useDispatch();
-  const { register, handleSubmit, control, setError, formState: {errors} } = useForm<Inputs>({ mode: "all" });
+  const {
+    register,
+    handleSubmit,
+    control,
+    setError,
+    formState: { errors },
+  } = useForm<Inputs>({ mode: "all" });
   const { isDirty, isValid } = useFormState({ control });
 
   const onSubmit = async (data: Inputs) => {

@@ -109,17 +109,15 @@ const BettingAdmin: FunctionComponent = () => {
           <h1>Betting is done</h1>
           <p className="lead">{betting.game.objective}</p>
           <table className="table table-sm">
-                <thead>
-                    <tr>
-                    <td>Rank</td>
-                    <td>Name</td>
-                    <td>Scales Spent</td>
-                    <td>Scales Won</td>
-                    </tr>
-                </thead>
-            <tbody>
-                {winners}
-            </tbody>
+            <thead>
+              <tr>
+                <td>Rank</td>
+                <td>Name</td>
+                <td>Scales Spent</td>
+                <td>Scales Won</td>
+              </tr>
+            </thead>
+            <tbody>{winners}</tbody>
           </table>
           <form>
             <div className="mb-3">

@@ -9,23 +9,28 @@ const initialState: Profile = {
   displayName: "",
   balance: 0,
   lastTransactionId: 0,
+  roles: [],
 };
 
 const profileSlice = createSlice({
   name: "profile",
   initialState,
   reducers: {
-    updateProfile(state, action: PayloadAction<Profile>) {
-      return action.payload;
+    updateProfile(_, action: PayloadAction<Profile>) {
+      return {
+        ...action.payload,
+        balance: +action.payload.balance,
+        lastTransactionId: +action.payload.lastTransactionId,
+      };
     },
     updateBalance(state, action: PayloadAction<Profile>) {
-      if (action.payload.lastTransactionId <= state.lastTransactionId) {
+      if (+action.payload.lastTransactionId <= state.lastTransactionId) {
         return state;
       }
       return {
         ...state,
-        balance: action.payload.balance,
-        lastTransactionId: action.payload.lastTransactionId,
+        balance: +action.payload.balance,
+        lastTransactionId: +action.payload.lastTransactionId,
       };
     },
   },

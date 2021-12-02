@@ -1,11 +1,13 @@
 import { combineReducers, configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import profile from "../features/profile/profileSlice";
 import betting from "../features/betting/bettingSlice";
+import leaderboard from "../features/leaderboard/leaderboardSlice";
 import { signal } from "./signalr";
 
 const rootReducer = combineReducers({
   profile,
   betting,
+  leaderboard,
 });
 
 export const store = configureStore({

@@ -3,4 +3,5 @@ export interface Profile {
   displayName: string;
   balance: number;
   lastTransactionId: number;
+  roles: string[];
 }
