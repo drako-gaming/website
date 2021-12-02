@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Profile } from "../features/profile/types";
 
-const baseUrl = "/api/";
+export const baseUrl = "/api/";
 
 interface GetProfileResponse {
   twitchId: string;
