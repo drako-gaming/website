@@ -12,7 +12,7 @@ const Header: FunctionComponent = () => {
     <Navbar bg="dark" variant="dark" expand="lg">
       <Container fluid>
         <Navbar.Brand as={Link} to="/">
-          Drako LIVE
+          <img src="/logo.png" alt="Drako LIVE" />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbar-collapse" />
         <Navbar.Collapse id="navbar-collapse">
