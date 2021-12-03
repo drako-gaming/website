@@ -2,7 +2,7 @@ import axios from "axios";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk, AppDispatch } from "../../app/store";
 import { Bet, BetStore, BettingGame } from "./types";
-import { baseUrl } from "../../api/api";
+import { axiosConfig, baseUrl, handleErrors } from "../../api/api";
 import { UseFormSetError } from "react-hook-form";
 
 const initialState: BetStore = {
@@ -49,15 +49,17 @@ const bettingSlice = createSlice({
 const loadBets =
   (gameId: string, winningOptionId: string): AppThunk =>
   async (dispatch: AppDispatch) => {
-    const response = await axios.get(baseUrl + `betting/${gameId}/bets?optionId=${winningOptionId}`);
+    const response = await axios.get(baseUrl + `betting/${gameId}/bets?optionId=${winningOptionId}`, axiosConfig);
 
     if (response.status === 200) {
       dispatch(bettingSlice.actions.updateBets(response.data));
     }
+
+    await handleErrors(dispatch, response);
   };
 
 export const loadBetting = (): AppThunk => async (dispatch: AppDispatch) => {
-  const response = await axios.get(baseUrl + "betting");
+  const response = await axios.get(baseUrl + "betting", axiosConfig);
 
   if (response.status === 200) {
     dispatch(bettingSlice.actions.updateBettingGame(response.data));
@@ -66,31 +68,31 @@ export const loadBetting = (): AppThunk => async (dispatch: AppDispatch) => {
     }
   }
 
-  // TODO: Dispatch failure actions
+  await handleErrors(dispatch, response);
 };
 
 export const openBetting =
   (resource: BettingGame, setError: UseFormSetError<any>): AppThunk =>
   async (dispatch: AppDispatch) => {
-    const response = await axios.post<BettingGame>(baseUrl + "betting", resource);
+    const response = await axios.post<BettingGame>(baseUrl + "betting", resource, axiosConfig);
 
     if (response.status === 201) {
       dispatch(bettingSlice.actions.updateBettingGame(response.data));
     }
 
-    // TODO: Dispatch failure actions
-    setError("server", { type: "server", message: "Error from server" });
+    await handleErrors(dispatch, response);
   };
 
 export const closeBetting =
   (gameId: string): AppThunk =>
   async (dispatch: AppDispatch) => {
-    const response = await axios.patch(baseUrl + `betting/${gameId}`, { status: "Closed" });
+    const response = await axios.patch(baseUrl + `betting/${gameId}`, { status: "Closed" }, axiosConfig);
 
     if (response.status === 200) {
       dispatch(bettingSlice.actions.updateBettingGame(response.data));
     }
-    // TODO: Dispatch failure actions
+
+    await handleErrors(dispatch, response);
   };
 
 export const chooseWinner =
@@ -101,13 +103,14 @@ export const chooseWinner =
       winningOption: winningOptionId,
     };
 
-    const response = await axios.patch(baseUrl + `betting/${gameId}`, payload);
+    const response = await axios.patch(baseUrl + `betting/${gameId}`, payload, axiosConfig);
 
     if (response.status === 200) {
       dispatch(bettingSlice.actions.updateBettingGame(response.data));
       dispatch(loadBets(gameId, winningOptionId));
     }
-    // TODO: Dispatch failure actions
+
+    await handleErrors(dispatch, response);
   };
 
 export const { updateBettingGame } = bettingSlice.actions;

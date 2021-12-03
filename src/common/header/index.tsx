@@ -7,7 +7,7 @@ import { RootState } from "../../app/store";
 
 const Header: FunctionComponent = () => {
   const profile = useSelector((state: RootState) => state.profile);
-  const isModerator = profile.roles && profile.roles.includes("Moderator");
+  const isModerator = profile.roles && profile.roles.includes("moderator");
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Container fluid>
