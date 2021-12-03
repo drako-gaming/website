@@ -9,7 +9,7 @@ import { RootState } from "./store";
 
 const Router: FunctionComponent = () => {
   const profile = useSelector((state: RootState) => state.profile);
-  const isModerator = profile.roles && profile.roles.includes("Moderator");
+  const isModerator = profile.roles && profile.roles.includes("moderator");
 
   return (
     <Routes>

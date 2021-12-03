@@ -9,6 +9,7 @@ interface GetProfileResponse {
   loginName: string;
   balance: number;
   lastTransactionId: number;
+  roles: string[];
 }
 
 export async function fetchProfile(): Promise<Profile> {
@@ -19,6 +20,7 @@ export async function fetchProfile(): Promise<Profile> {
       isAuthenticated: true,
       displayName: response.data.displayName,
       balance: response.data.balance,
+      roles: response.data.roles
     } as Profile;
   }
   return {
