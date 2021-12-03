@@ -1,8 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk, AppDispatch } from "../../app/store";
 import { Profile } from "./types";
-import { fetchProfile } from "../../api/api";
+import { axiosConfig, fetchProfile, postPresence } from "../../api/api";
 import { loadBetting } from "../betting/bettingSlice";
+import axios from "axios";
+
+let timer: any = null;
 
 const initialState: Profile = {
   isAuthenticated: false,
@@ -36,10 +39,27 @@ const profileSlice = createSlice({
   },
 });
 
+const startPresenceTicker = (): AppThunk => async (dispatch: AppDispatch) => {
+  clearInterval(timer);
+  postPresence(dispatch);
+  timer = setInterval(() => {
+    postPresence(dispatch);
+  }, 60000);
+};
+
 export const loadProfile = (): AppThunk => async (dispatch: AppDispatch) => {
   const profile = await fetchProfile();
   dispatch(profileSlice.actions.updateProfile(profile));
-  dispatch(loadBetting());
+  if (profile.isAuthenticated) {
+    dispatch(startPresenceTicker());
+    dispatch(loadBetting());
+  }
+};
+
+export const signOut = (): AppThunk => async (dispatch: AppDispatch) => {
+  clearInterval(timer);
+  await axios.get("/api/logout", axiosConfig);
+  dispatch(profileSlice.actions.updateProfile(initialState));
 };
 
 export const { updateProfile, updateBalance } = profileSlice.actions;

@@ -21,8 +21,8 @@ const Leaderboard: FunctionComponent = () => {
         </tr>
       </thead>
       <tbody>
-        {leaderboard.map((x) => (
-          <tr>
+        {leaderboard.map((x, i) => (
+          <tr key={x.displayName + i}>
             <td>{x.rank}</td>
             <td>{x.displayName}</td>
             <td>{x.balance}</td>
