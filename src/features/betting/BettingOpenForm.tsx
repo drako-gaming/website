@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { useDispatch } from "react-redux";
-import { useForm, useFormState } from "react-hook-form";
-import { BettingGame } from "./types";
+import { useForm, useFormState, useFieldArray } from "react-hook-form";
+import { BettingGame, BettingGameOption } from "./types";
 import { openBetting } from "./bettingSlice";
 import { ErrorMessage } from "@hookform/error-message";
 
@@ -11,8 +11,7 @@ interface BettingOpenFormProps {
 
 type Inputs = {
   objective: string;
-  option1: string;
-  option2: string;
+  option: { description: string }[];
 };
 
 const BettingOpenForm: FunctionComponent<BettingOpenFormProps> = ({ onCls }) => {
@@ -23,13 +22,19 @@ const BettingOpenForm: FunctionComponent<BettingOpenFormProps> = ({ onCls }) => 
     control,
     setError,
     formState: { errors },
-  } = useForm<Inputs>({ mode: "all" });
+  } = useForm<Inputs>({
+    mode: "all",
+    defaultValues: { objective: "", option: [{ description: "" }, { description: "" }] },
+  });
+  const { fields, append, remove } = useFieldArray({ name: "option", control });
   const { isDirty, isValid } = useFormState({ control });
 
   const onSubmit = async (data: Inputs) => {
     const valueToSubmit: BettingGame = {
       objective: data.objective,
-      options: [{ description: data.option1 }, { description: data.option2 }],
+      options: data.option.map((item) => {
+        return { description: item.description } as BettingGameOption;
+      }),
     };
     dispatch(openBetting(valueToSubmit, setError));
     onCls();
@@ -57,12 +62,28 @@ const BettingOpenForm: FunctionComponent<BettingOpenFormProps> = ({ onCls }) => 
         <div className="mb-3">
           <label className="form-label">Options</label>
         </div>
-        <div className="mb-3">
-          <input className="form-control" {...register("option1", { required: true })} />
-        </div>
-        <div className="mb-3">
-          <input className="form-control" {...register("option2", { required: true })} />
-        </div>
+        {fields.map((field, index: number) => (
+          <div key={field.id} className="input-group mb-3">
+            <input
+              className="form-control"
+              {...register(`option.${index}.description` as const, { required: index < 2 })}
+            />
+            {index > 0 && index < fields.length - 1 ? (
+              <button type="button" className="btn btn-danger" onClick={() => remove(index)}>
+                -
+              </button>
+            ) : (
+              ""
+            )}
+            {index === fields.length - 1 ? (
+              <button type="button" className="btn btn-info" onClick={() => append({ description: "" })}>
+                +
+              </button>
+            ) : (
+              ""
+            )}
+          </div>
+        ))}
         <div className="mb-3">
           <button type="submit" className="btn btn-primary w-100" disabled={!isDirty || !isValid}>
             Open betting
