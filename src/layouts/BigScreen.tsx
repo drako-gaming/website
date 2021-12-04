@@ -10,11 +10,11 @@ const BigScreen: FunctionComponent = () => {
   return (
     <div className="m-0 p-0 h-100 d-md-flex flex-column">
       <Header />
-      <div className="container-fluid d-flex h-100 flex-column">
+      <div className="container-fluid d-flex h-100 mh-100 flex-column">
         <div className="row flex-fill d-flex">
-          <div className="col h-100 d-flex flex-row align-items-stretch m-0 p-0">
+          <div className="col h-100 mh-100 d-flex flex-row align-items-stretch m-0 p-0">
             <Video className={match ? "" : "d-none"} />
-            <div className={match ? "d-none" : "container-fluid"} style={{ overflowY: "scroll" }}>
+            <div className={match ? "d-none" : "container-fluid content"}>
               <div className="row">
                 <div className="col-md-4 offset-md-4">
                   <Outlet />
