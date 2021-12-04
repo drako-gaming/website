@@ -7,8 +7,10 @@ $info:       #5bc0de;
 $warning:    #f0ad4e;
 $danger:     #d9534f;
 $enable-gradients: true;
+$font-family-sans-serif: "Open Sans";
 
 @import '~bootstrap/scss/bootstrap.scss';
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
 
 body {
   width: 100%;
