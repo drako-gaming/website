@@ -61,7 +61,6 @@ const TheBet: FunctionComponent = () => {
   var BetCheck = [];
   var BetButt = [];
   var RadioName;
-  console.log(betting.bets);
 
   //TODO: change the look of radio BUTTS
   if (profile.isAuthenticated)
@@ -72,7 +71,7 @@ const TheBet: FunctionComponent = () => {
         const item = betting.game.options[index];
         RadioName = "Option-" + index;
         BetCheck.push(
-          <div className="form-check">
+          <div className="form-check" key={Math.random().toString(36).substr(2, 9)}>
             <input onChange={() => setState({...state, OptionId : item.id!})} className="form-check-input" type="radio" name="BettOption" value={betting.game.options[index].id} id={RadioName}/>
             <label className="form-check-label" htmlFor={RadioName}>
               {betting.game.options[index].description}
@@ -81,7 +80,7 @@ const TheBet: FunctionComponent = () => {
         );
       }
       BetButt.push(
-        <div className="input-group mb-3 align-self-end d-flex p-3">
+        <div className="input-group mb-3 align-self-end d-flex p-3" key={Math.random().toString(36).substr(2, 9)}>
           <input name="BetAmount" type='number' min="0" max={profile.balance} className="form-control" onChange={e => setState({...state, amount : e.target.value})}></input>
           <div className="input-group-append">
             <button className="btn" type="button" style={{backgroundColor: "#00db84"}} onClick={() => DisForm(state.OptionId, state.amount, betting.game.id!, dispatch)}>Bet!</button>
@@ -98,7 +97,7 @@ const TheBet: FunctionComponent = () => {
         if (profile.lastTransactionId.toString() === betting.game.options[index].id) 
         {
           BetCheck.push(
-            <div className="form-check">
+            <div className="form-check" key={Math.random().toString(36).substr(2, 9)}>
               <input className="form-check-input" type="radio" name="BettOption" id={RadioName} disabled checked/>
               <label className="form-check-label" htmlFor={RadioName}>
                 {betting.game.options[index].description}
@@ -109,7 +108,7 @@ const TheBet: FunctionComponent = () => {
         else
         {
           BetCheck.push(
-            <div className="form-check">
+            <div className="form-check" key={Math.random().toString(36).substr(2, 9)}>
               <input className="form-check-input" type="radio" name="BettOption" id={RadioName} disabled/>
               <label className="form-check-label" htmlFor={RadioName}>
                 {betting.game.options[index].description}
@@ -124,7 +123,7 @@ const TheBet: FunctionComponent = () => {
   {
     for (let index = 0; index < betting.game.options.length; index++) 
     {
-      BetCheck.push(<p>{betting.game.options[index].description}</p>);
+      BetCheck.push(<p key={Math.random().toString(36).substr(2, 9)}>{betting.game.options[index].description}</p>);
     }
   }
   else
