@@ -38,7 +38,11 @@ const BettingAdmin: FunctionComponent = () => {
           <p>All bets have been refunded.</p>
           <form>
             <div className="mb-3">
-              <button type="button" className="btn btn-primary w-100" onClick={() => setState({ ...state, openingBet: true })}>
+              <button
+                type="button"
+                className="btn btn-primary w-100"
+                onClick={() => setState({ ...state, openingBet: true })}
+              >
                 Start new bet
               </button>
             </div>
@@ -59,12 +63,20 @@ const BettingAdmin: FunctionComponent = () => {
           <p>scales wagered</p>
           <form>
             <div className="mb-3">
-              <button type="button" className="btn btn-primary w-100" onClick={() => dispatch(closeBetting(betting.game.id!))}>
+              <button
+                type="button"
+                className="btn btn-primary w-100"
+                onClick={() => dispatch(closeBetting(betting.game.id!))}
+              >
                 Close betting
               </button>
             </div>
             <div className="mb-3">
-              <button type="button" className="btn btn-danger w-100" onClick={() => dispatch(cancelBetting(betting.game.id!))}>
+              <button
+                type="button"
+                className="btn btn-danger w-100"
+                onClick={() => dispatch(cancelBetting(betting.game.id!))}
+              >
                 Cancel betting
               </button>
             </div>
@@ -90,12 +102,20 @@ const BettingAdmin: FunctionComponent = () => {
           </table>
           <form>
             <div className="mb-3">
-              <button type="button" className="btn btn-primary w-100" onClick={() => setState({ ...state, choosingWinner: true })}>
+              <button
+                type="button"
+                className="btn btn-primary w-100"
+                onClick={() => setState({ ...state, choosingWinner: true })}
+              >
                 Choose winner
               </button>
             </div>
             <div className="mb-3">
-              <button type="button" className="btn btn-danger w-100" onClick={() => dispatch(cancelBetting(betting.game.id!))}>
+              <button
+                type="button"
+                className="btn btn-danger w-100"
+                onClick={() => dispatch(cancelBetting(betting.game.id!))}
+              >
                 Cancel betting
               </button>
             </div>
@@ -104,14 +124,24 @@ const BettingAdmin: FunctionComponent = () => {
       );
 
     case "Done":
-      const winners = betting.bets.length > 0 ? betting.bets.map((item, i) => (
-        <tr key={item.userTwitchId}>
-          <td>{i + 1}</td>
-          <td>{item.userTwitchDisplayName}</td>
-          <td>{item.amount}</td>
-          <td>{item.awarded}</td>
-        </tr>
-      )) : (<tr><td colSpan={4}><p></p><p className="lead">Nobody won</p></td></tr>);
+      const winners =
+        betting.bets.length > 0 ? (
+          betting.bets.map((item, i) => (
+            <tr key={item.userTwitchId}>
+              <td>{i + 1}</td>
+              <td>{item.userTwitchDisplayName}</td>
+              <td>{item.amount}</td>
+              <td>{item.awarded}</td>
+            </tr>
+          ))
+        ) : (
+          <tr>
+            <td colSpan={4}>
+              <p></p>
+              <p className="lead">Nobody won</p>
+            </td>
+          </tr>
+        );
       return (
         <div className="text-center">
           <h1>Betting is done</h1>
@@ -129,7 +159,11 @@ const BettingAdmin: FunctionComponent = () => {
           </table>
           <form>
             <div className="mb-3">
-              <button type="button" className="btn btn-primary w-100" onClick={() => setState({ ...state, openingBet: true })}>
+              <button
+                type="button"
+                className="btn btn-primary w-100"
+                onClick={() => setState({ ...state, openingBet: true })}
+              >
                 Start new bet
               </button>
             </div>
