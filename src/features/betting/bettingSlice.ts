@@ -4,6 +4,7 @@ import { AppThunk, AppDispatch } from "../../app/store";
 import { Bet, BetStore, BettingGame } from "./types";
 import { axiosConfig, baseUrl, handleErrors } from "../../api/api";
 import { UseFormSetError } from "react-hook-form";
+import internal from "stream";
 
 const initialState: BetStore = {
   game: {
@@ -45,6 +46,23 @@ const bettingSlice = createSlice({
     },
   },
 });
+
+const viewerBet =
+  (twitchId: string, option: string, amount: number, betId: string): AppThunk =>
+  async (dispatch: AppDispatch) => {
+    const payload = {
+      Viewer: twitchId,
+      Option: option,
+      AmountBet: amount
+    }
+    const response = await axios.post(baseUrl + `betting/${betId}/bet`, payload, axiosConfig);//what kind of id?
+
+    if(response.status === 201){
+      //TODO: what the frick frack do i do here?
+    }
+
+    await handleErrors(dispatch, response);
+  };
 
 const loadBets =
   (gameId: string, winningOptionId: string): AppThunk =>

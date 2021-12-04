@@ -1,52 +1,15 @@
-import { FunctionComponent } from "react";
-import { useSelector } from "react-redux";
+import { FunctionComponent, Component } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../app/store";
 
-//temp shtuff
-const PostAPIBett = {
-  "objective": "Will Catmando become a dog?",
-  "options": [
-      {
-          "description": "He will become a dog"
-      },
-      {
-          "description": "He will not become a dog and live"
-      },
-      {
-          "description": "He will die"
-      }
-  ]
-};
-
-const PostAPIBettInLogged = {
-  "id": "101",
-  "objective": "Will Catmando become a dog?",
-  "options": [
-    {
-      "description": "He will become a dog",
-      "id": "512",
-      "total": "0"
-    },
-    {
-      "description": "He will not become a dog and live",
-      "id": "513",
-      "total": "0"
-    },
-    {
-      "description": "He will die",
-      "id": "514",
-      "total": "0"
-    }
-  ],
-  "status": "Open",
-  "winningOption": null,
-  "total": "0",
-  "alreadyBet": false
-};
-
 /*
-docker fuckery
-react state
+LEARN: 
+  * how to fix Bet array
+
+TEST:
+  * normal run and every case auth/noauth open,closed, canceled and Done
+
+
 axtio dispatch
 
 
@@ -83,24 +46,34 @@ response
   "alreadyBet": true
 }
 */
-
+OnRadioChange: function(e)
+  {
+    this.setState({
+      Option: e.currentTarget.value
+    });
+  }
+//cancle, open, closed, done
 const TheBet: FunctionComponent = () => {
+
   const profile = useSelector((state: RootState) => state.profile);
+  const betting = useSelector((state: RootState) => state.betting);//when do i get this info with the whole auth or no auth
+  const dispatch = useDispatch();
   var BetCheck = [];
   var BetButt = [];
   var RadioName;
-  
-  if (profile.isAuthenticated)//TODO: make api get function for betting 
+
+  //TODO: change the look of BUTTS
+  if (profile.isAuthenticated)
   {
-    if (PostAPIBettInLogged.status)//i can do this with less code but it works
+    if (betting.game.status === "Open" && !betting.game.alreadyBet)//i can do this with less code but it works
     {
-      for (let index = 0; index < PostAPIBett.options.length; index++) {
+      for (let index = 0; index < betting.game.options.length; index++) {
         RadioName = "Option-" + index;
         BetCheck.push(
           <div className="form-check">
-            <input className="form-check-input" type="radio" name="BettOption" id={RadioName}/>
-            <label className="form-check-label" htmlFor={RadioName}>
-              {PostAPIBett.options[index].description}
+            <input className="form-check-input" type="radio" name="BettOption" value={betting.game.options[index].id} id={RadioName}/>
+            <label onChange={this.sele} className="form-check-label" htmlFor={RadioName}>
+              {betting.game.options[index].description}
             </label>
         </div>
         );
@@ -109,24 +82,24 @@ const TheBet: FunctionComponent = () => {
         <div className="input-group mb-3 align-self-end d-flex p-3">
           <input type='number' min="0" max={profile.balance} className="form-control"></input>
           <div className="input-group-append">
-            <button className="btn" type="button" style={{backgroundColor: "#00db84"}}>Bet!</button>
+            <button onClick={() => dispatch(ViewerBetting(profile.displayName, betting.game.options[index].id, ))} className="btn" type="button" style={{backgroundColor: "#00db84"}}>Bet!</button>
           </div>
         </div>
       );
-    }
-    else //set choosen bet active
+    }//twitchId: string, option: string, amount: number, betId: string FIXME: argument for viewer betting
+    else if(betting.game.status === "Closed" || betting.game.alreadyBet)
     {
-      for (let index = 0; index < PostAPIBett.options.length; index++) {
+      for (let index = 0; index < betting.game.options.length; index++) {
         RadioName = "Option-" + index;
 
-        //need to make sure this is correct
-        if (profile.lastTransactionId.toString() === PostAPIBettInLogged.options[index].id) 
+        //TODO: fix this statment to right id
+        if (profile.lastTransactionId.toString() === betting.game.options[index].id) 
         {
           BetCheck.push(
             <div className="form-check">
               <input className="form-check-input" type="radio" name="BettOption" id={RadioName} disabled checked/>
               <label className="form-check-label" htmlFor={RadioName}>
-                {PostAPIBett.options[index].description}
+                {betting.game.options[index].description}
               </label>
           </div>
           );
@@ -137,7 +110,7 @@ const TheBet: FunctionComponent = () => {
             <div className="form-check">
               <input className="form-check-input" type="radio" name="BettOption" id={RadioName} disabled/>
               <label className="form-check-label" htmlFor={RadioName}>
-                {PostAPIBett.options[index].description}
+                {betting.game.options[index].description}
               </label>
           </div>
           );
@@ -145,17 +118,21 @@ const TheBet: FunctionComponent = () => {
       }
     }
   }
+  else if(betting.game.status !== "Done" && betting.game.status !== "Cancelled")
+  {
+    for (let index = 0; index < betting.game.options.length; index++) 
+    {
+      BetCheck.push(<p>{betting.game.options[index].description}</p>);
+    }
+  }
   else
   {
-    for (let index = 0; index < PostAPIBett.options.length; index++) 
-    {
-      BetCheck.push(<p>{PostAPIBett.options[index].description}</p>);
-    }
+    return (null);
   }
   return(
     <div>
       <div className="p-3">
-        <h5>{PostAPIBett.objective}</h5>
+        <h5>{betting.game.objective}</h5>
         {BetCheck}
       </div>
       {BetButt}
@@ -165,14 +142,10 @@ const TheBet: FunctionComponent = () => {
 
 
 const ViewerBetting: FunctionComponent = () => {
-
-  //let Profil = fetchProfile();
   const twitchBGColor = {
     backgroundColor: " #18181B",
     maxWidth: 340
   };
-  //gör snygg og //överst char desc?  style={{height:"100%"}}
-  //https://getbootstrap.com/docs/4.0/utilities/flex/
 
   return (
       <div id="ViewerBetting" className="d-none col d-flex flex-column m-0 p-0" style={twitchBGColor}>
