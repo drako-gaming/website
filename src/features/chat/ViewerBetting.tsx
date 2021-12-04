@@ -1,16 +1,20 @@
-import { FunctionComponent, Component } from "react";
+import { FunctionComponent, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../app/store";
+import { AppDispatch, RootState } from "../../app/store";
+import { viewerBet } from "../betting/bettingSlice";
+
 
 /*
 LEARN: 
-  * how to fix Bet array
-
+  *
 TEST:
   * normal run and every case auth/noauth open,closed, canceled and Done
 
+FIX:
+  * transaction id if statment thing
 
-axtio dispatch
+TO ASK:
+  
 
 
 betting 
@@ -46,33 +50,31 @@ response
   "alreadyBet": true
 }
 */
-OnRadioChange: function(e)
-  {
-    this.setState({
-      Option: e.currentTarget.value
-    });
-  }
-//cancle, open, closed, done
-const TheBet: FunctionComponent = () => {
 
+//TODO: animate
+const TheBet: FunctionComponent = () => {
   const profile = useSelector((state: RootState) => state.profile);
   const betting = useSelector((state: RootState) => state.betting);//when do i get this info with the whole auth or no auth
+  const [state, setState] = useState({ OptionId: "", amount: ""});
   const dispatch = useDispatch();
+
   var BetCheck = [];
   var BetButt = [];
   var RadioName;
+  console.log(betting.bets);
 
-  //TODO: change the look of BUTTS
+  //TODO: change the look of radio BUTTS
   if (profile.isAuthenticated)
   {
     if (betting.game.status === "Open" && !betting.game.alreadyBet)//i can do this with less code but it works
     {
       for (let index = 0; index < betting.game.options.length; index++) {
+        const item = betting.game.options[index];
         RadioName = "Option-" + index;
         BetCheck.push(
           <div className="form-check">
-            <input className="form-check-input" type="radio" name="BettOption" value={betting.game.options[index].id} id={RadioName}/>
-            <label onChange={this.sele} className="form-check-label" htmlFor={RadioName}>
+            <input onChange={() => setState({...state, OptionId : item.id!})} className="form-check-input" type="radio" name="BettOption" value={betting.game.options[index].id} id={RadioName}/>
+            <label className="form-check-label" htmlFor={RadioName}>
               {betting.game.options[index].description}
             </label>
         </div>
@@ -80,13 +82,13 @@ const TheBet: FunctionComponent = () => {
       }
       BetButt.push(
         <div className="input-group mb-3 align-self-end d-flex p-3">
-          <input type='number' min="0" max={profile.balance} className="form-control"></input>
+          <input name="BetAmount" type='number' min="0" max={profile.balance} className="form-control" onChange={e => setState({...state, amount : e.target.value})}></input>
           <div className="input-group-append">
-            <button onClick={() => dispatch(ViewerBetting(profile.displayName, betting.game.options[index].id, ))} className="btn" type="button" style={{backgroundColor: "#00db84"}}>Bet!</button>
+            <button className="btn" type="button" style={{backgroundColor: "#00db84"}} onClick={() => DisForm(state.OptionId, state.amount, betting.game.id!, dispatch)}>Bet!</button>
           </div>
         </div>
       );
-    }//twitchId: string, option: string, amount: number, betId: string FIXME: argument for viewer betting
+    }//twitchId: string, option: string, amount: number, betId: string
     else if(betting.game.status === "Closed" || betting.game.alreadyBet)
     {
       for (let index = 0; index < betting.game.options.length; index++) {
@@ -129,15 +131,25 @@ const TheBet: FunctionComponent = () => {
   {
     return (null);
   }
+  //FIXME: fix for more than one bet later.
   return(
-    <div>
+    <form>
       <div className="p-3">
         <h5>{betting.game.objective}</h5>
         {BetCheck}
       </div>
       {BetButt}
-    </div>
+    </form>
   );
+}
+
+//Not the best way but sure is a way
+function DisForm(OptId:string, Amount:string, Id:string, dispatch:AppDispatch) {
+  var intAmount = Number(Amount);
+
+  if (intAmount !== NaN) {
+    dispatch(viewerBet(OptId, intAmount, Id));
+  }
 }
 
 

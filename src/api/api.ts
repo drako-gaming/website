@@ -25,6 +25,7 @@ export async function fetchProfile(): Promise<Profile> {
   if (response.status === 200) {
     return {
       isAuthenticated: true,
+      twitchId: response.data.twitchId,
       displayName: response.data.displayName,
       balance: response.data.balance,
       roles: response.data.roles,

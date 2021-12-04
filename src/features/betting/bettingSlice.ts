@@ -47,18 +47,22 @@ const bettingSlice = createSlice({
   },
 });
 
-const viewerBet =
-  (twitchId: string, option: string, amount: number, betId: string): AppThunk =>
+
+export const viewerBet =
+  (option: string, BetAmount: number, betId: string): AppThunk =>
   async (dispatch: AppDispatch) => {
     const payload = {
-      Viewer: twitchId,
-      Option: option,
-      AmountBet: amount
+      optionId: option,
+      amount: BetAmount
     }
+    
+    console.log(payload);
     const response = await axios.post(baseUrl + `betting/${betId}/bet`, payload, axiosConfig);//what kind of id?
 
-    if(response.status === 201){
-      //TODO: what the frick frack do i do here?
+    if(response.status === 200){
+      //TODO: what to do here?
+      dispatch(bettingSlice.actions.updateBettingGame(response.data));
+      //dispatch(bettingSlice.actions.updateBet({ option, amount, gameId});
     }
 
     await handleErrors(dispatch, response);

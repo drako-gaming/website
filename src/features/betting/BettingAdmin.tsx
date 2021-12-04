@@ -19,7 +19,7 @@ const BettingAdmin: FunctionComponent = () => {
   }
 
   switch (betting.game.status) {
-    case "Cancelled":
+    case "Canceled":
       const cancelledOptions = betting.game.options.map((item) => (
         <tr>
           <td>{item.description}</td>
