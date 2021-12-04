@@ -69,7 +69,7 @@ const BettingOpenForm: FunctionComponent<BettingOpenFormProps> = ({ onCls }) => 
           </button>
         </div>
         <div className="mb-3">
-          <button className="btn btn-danger w-100" onClick={() => onCls()}>
+          <button type="button" className="btn btn-danger w-100" onClick={() => onCls()}>
             Cancel
           </button>
         </div>

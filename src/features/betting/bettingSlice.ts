@@ -95,6 +95,18 @@ export const closeBetting =
     await handleErrors(dispatch, response);
   };
 
+export const cancelBetting =
+  (gameId: string): AppThunk =>
+  async (dispatch: AppDispatch) => {
+    const response = await axios.patch(baseUrl + `betting/${gameId}`, { status: "Canceled" }, axiosConfig);
+
+    if (response.status === 200) {
+      dispatch(bettingSlice.actions.updateBettingGame(response.data));
+    }
+
+    await handleErrors(dispatch, response);
+  };
+
 export const chooseWinner =
   (gameId: string, winningOptionId: string): AppThunk =>
   async (dispatch: AppDispatch) => {

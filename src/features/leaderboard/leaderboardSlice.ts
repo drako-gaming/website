@@ -17,7 +17,7 @@ const leaderboardSlice = createSlice({
 });
 
 export const loadLeaderboard = (): AppThunk => async (dispatch: AppDispatch) => {
-  const response = await axios.get(baseUrl + "leaderboard", axiosConfig);
+  const response = await axios.get(baseUrl + "leaderboard?pageSize=40", axiosConfig);
 
   if (response.status === 200) {
     dispatch(leaderboardSlice.actions.updateLeaderboard(response.data));
