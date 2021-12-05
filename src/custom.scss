@@ -59,3 +59,14 @@ body {
   overflow-x: auto;
   max-height: calc(100vh - 76px);
  }
+
+@include media-breakpoint-up(lg) {
+  .chat {
+    max-width: 380px;
+    height: 100%;
+  }
+}
+
+.content-wrapper {
+  max-height: calc(100vh - 76px);
+}
