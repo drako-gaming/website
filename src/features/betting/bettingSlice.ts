@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk, AppDispatch } from "../../app/store";
-import { Bet, BetStore, BettingGame } from "./types";
+import { BetResult, BetStore, BettingGame } from "./types";
 import { axiosConfig, baseUrl, handleErrors } from "../../api/api";
 import { UseFormSetError } from "react-hook-form";
 
@@ -11,7 +11,7 @@ const initialState: BetStore = {
     status: "Never",
     options: [],
   },
-  bets: [],
+  winners: [],
 };
 
 const bettingSlice = createSlice({
@@ -37,7 +37,7 @@ const bettingSlice = createSlice({
 
       return state;
     },
-    updateBets(state: BetStore, action: PayloadAction<Bet[]>) {
+    updateBets(state: BetStore, action: PayloadAction<BetResult[]>) {
       return {
         ...state,
         bets: action.payload,
