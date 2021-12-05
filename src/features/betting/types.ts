@@ -14,7 +14,7 @@ export interface BettingGame {
   alreadyBet?: boolean;
 }
 
-export interface Bet {
+export interface BetResult {
   userTwitchId: string;
   userTwitchDisplayName: string;
   amount: number;
@@ -23,5 +23,5 @@ export interface Bet {
 
 export interface BetStore {
   game: BettingGame;
-  bets: Bet[];
+  winners: BetResult[];
 }

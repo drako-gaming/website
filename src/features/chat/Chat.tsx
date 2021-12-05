@@ -5,7 +5,7 @@ const Chat: FunctionComponent = () => {
   var loc = "https://www.twitch.tv/embed/drako/chat?parent=" + window.location.hostname + "&darkpopout";
 //can i move styles to here?
   return (
-    <div className="col d-flex flex-row m-0 p-0" style={{ maxWidth: 340 }}>
+    <div>
       <ViewerBetting />
       <div id="ovelap-Box">
         <div id="test2" onClick={bettingButt}>
