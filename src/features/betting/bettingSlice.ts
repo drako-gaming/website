@@ -44,6 +44,12 @@ const bettingSlice = createSlice({
         bets: action.payload,
       };
     },
+    updateBet(state: BetStore, action: PayloadAction<Bet[]>){
+      return {
+        ...state,
+        bet: action.payload,
+      };
+    }
   },
 });
 

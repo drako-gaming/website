@@ -2,11 +2,14 @@ import { FunctionComponent, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../app/store";
 import { viewerBet } from "../betting/bettingSlice";
+//import slideInLeft from "react-animated-slideInLeft";
+
 
 
 /*
 LEARN: 
-  *
+  * https://www.npmjs.com/package/react-animated-components
+  * ^ behövs yarn npm ok liksom liksom
 TEST:
   * normal run and every case auth/noauth open,closed, canceled and Done
 
