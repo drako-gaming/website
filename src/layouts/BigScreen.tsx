@@ -14,7 +14,7 @@ const BigScreen: FunctionComponent = () => {
         <div className="row flex-fill d-flex flex-wrap flex-lg-nowrap h-100 content-wrapper">
           <div className="flex-row col-lg d-flex align-items-center m-0 p-0">
             <Video className={match ? "" : "d-none"} />
-            <div className={match ? "d-none" : "container-fluid content"}>
+            <div id="content" className={match ? "d-none" : "container-fluid content"}>
               <div className="row">
                 <div className="col-xl-4 offset-xl-4">
                   <Outlet />

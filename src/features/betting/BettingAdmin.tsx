@@ -125,8 +125,8 @@ const BettingAdmin: FunctionComponent = () => {
 
     case "Done":
       const winners =
-        betting.bets.length > 0 ? (
-          betting.bets.map((item, i) => (
+        betting.winners.length > 0 ? (
+          betting.winners.map((item, i) => (
             <tr key={item.userTwitchId}>
               <td>{i + 1}</td>
               <td>{item.userTwitchDisplayName}</td>
