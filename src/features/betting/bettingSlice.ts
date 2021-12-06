@@ -13,7 +13,7 @@ const initialState: BetStore = {
     options: [],
   },
   winners: [],
-};//here?
+};//fix dis? and style
 
 const bettingSlice = createSlice({
   name: "betting",
@@ -154,5 +154,5 @@ export const chooseWinner =
     await handleErrors(dispatch, response);
   };
 
-export const { updateBettingGame } = bettingSlice.actions;
+export const { updateBettingGame, updateBet } = bettingSlice.actions;//
 export default bettingSlice.reducer;
