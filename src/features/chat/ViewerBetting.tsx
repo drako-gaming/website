@@ -2,30 +2,25 @@ import { FunctionComponent, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../app/store";
 import { viewerBet } from "../betting/bettingSlice";
-//import slideInLeft from "react-animated-slideInLeft";
-
-
 
 /*
 LEARN: 
-  * https://www.npmjs.com/package/react-animated-components
-  * ^ behövs yarn npm ok liksom liksom
+  * https://getbootstrap.com/docs/5.0/components/offcanvas/
+  * 
 TEST:
   * normal run and every case auth/noauth open,closed, canceled and Done
 
 FIX:
   * transaction id if statment thing
-
+  * page loads get bet from api
+  * flip flop state, store
 TO ASK:
   
-
-
 betting 
 amount o user
 
-
 POST /api/betting/{id}/bet
-        
+
 {
   "amount": "200",
   "optionId": "23"
@@ -60,7 +55,7 @@ const TheBet: FunctionComponent = () => {
   const betting = useSelector((state: RootState) => state.betting);//when do i get this info with the whole auth or no auth
   const [state, setState] = useState({ OptionId: "", amount: ""});
   const dispatch = useDispatch();
-
+  console.log(betting);
   var BetCheck = [];
   var BetButt = [];
   var RadioName;
@@ -154,16 +149,13 @@ function DisForm(OptId:string, Amount:string, Id:string, dispatch:AppDispatch) {
   }
 }
 
-
 const ViewerBetting: FunctionComponent = () => {
   const twitchBGColor = {
-    backgroundColor: " #18181B",
-    maxWidth: 340
+    backgroundColor: " #18181B"
   };
-
   return (
-      <div id="ViewerBetting" className="d-none col d-flex flex-column m-0 p-0" style={twitchBGColor}>
-        <div className="d-flex p-4 border-bottom border-secondary"></div>
+      <div id="ViewerBetting" className="d-none flex-row col-lg" style={twitchBGColor}>
+        <div className="border-bottom border-secondary p-4"></div>
         <div className="d-flex justify-content-center">
           <TheBet/>
         </div>

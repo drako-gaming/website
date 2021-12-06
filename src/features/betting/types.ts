@@ -25,3 +25,8 @@ export interface BetStore {
   game: BettingGame;
   winners: BetResult[];
 }
+
+export interface Bet{
+  optionsID: string,
+  amount: number;
+}

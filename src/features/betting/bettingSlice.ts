@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk, AppDispatch } from "../../app/store";
-import { BetResult, BetStore, BettingGame } from "./types";
+import { Bet, BetResult, BetStore, BettingGame } from "./types";
 import { axiosConfig, baseUrl, handleErrors } from "../../api/api";
 import { UseFormSetError } from "react-hook-form";
 import internal from "stream";
@@ -13,7 +13,7 @@ const initialState: BetStore = {
     options: [],
   },
   winners: [],
-};
+};//here?
 
 const bettingSlice = createSlice({
   name: "betting",
@@ -44,12 +44,12 @@ const bettingSlice = createSlice({
         bets: action.payload,
       };
     },
-    updateBet(state: BetStore, action: PayloadAction<Bet[]>){
+    updateBet(state: BetStore, action: PayloadAction<Bet>){
       return {
         ...state,
         bet: action.payload,
       };
-    }
+    },
   },
 });
 
@@ -62,13 +62,14 @@ export const viewerBet =
       amount: BetAmount
     }
     
-    console.log(payload);
-    const response = await axios.post(baseUrl + `betting/${betId}/bet`, payload, axiosConfig);//what kind of id?
+    const response = await axios.post(baseUrl + `betting/${betId}/bet`, payload, axiosConfig);
+    const BetObj:Bet = {optionsID: payload.optionId, amount: payload.amount};
+
 
     if(response.status === 200){
       //TODO: what to do here?
       dispatch(bettingSlice.actions.updateBettingGame(response.data));
-      //dispatch(bettingSlice.actions.updateBet({ option, amount, gameId});
+      dispatch(bettingSlice.actions.updateBet(BetObj));
     }
 
     await handleErrors(dispatch, response);
