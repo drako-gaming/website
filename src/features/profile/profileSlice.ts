@@ -33,8 +33,8 @@ const profileSlice = createSlice({
         return state;
       }
       var initialBalance = state.initialBalance;
-      if(state.lastTransactionId === 0) {
-          initialBalance = +action.payload.balance;
+      if (state.lastTransactionId === 0) {
+        initialBalance = +action.payload.balance;
       }
 
       return {
