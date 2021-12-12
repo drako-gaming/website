@@ -4,7 +4,6 @@ import { AppThunk, AppDispatch } from "../../app/store";
 import { Bet, BetResult, BetStore, BettingGame } from "./types";
 import { axiosConfig, baseUrl, handleErrors } from "../../api/api";
 import { UseFormSetError } from "react-hook-form";
-import internal from "stream";
 
 const initialState: BetStore = {
   game: {
@@ -82,7 +81,7 @@ export const loadViewerBet =
   (TwitchId: string, betId: string): AppThunk =>
   async (dispatch: AppDispatch) => {
     const response = await axios.get(baseUrl + `betting/${betId}/bets?userId=${TwitchId}`);
-    const BetObj:Bet = {optionsID: response.data.optionId, amount: response.data.amount};
+    const BetObj:Bet = {optionsID: response.data[0].optionId, amount: +response.data[0].amount};
 
     if(response.status === 200){
       dispatch(bettingSlice.actions.updateBet(BetObj));
@@ -103,7 +102,7 @@ const loadBets =
     await handleErrors(dispatch, response);
   };
 
-export const loadBetting = (): AppThunk => async (dispatch: AppDispatch) => {
+export const loadBetting = (twitchId:string): AppThunk => async (dispatch: AppDispatch) => {
   const response = await axios.get(baseUrl + "betting", axiosConfig);
 
   if (response.status === 200) {
@@ -111,6 +110,7 @@ export const loadBetting = (): AppThunk => async (dispatch: AppDispatch) => {
     if (response.data.winningOption) {
       dispatch(loadBets(response.data.id, response.data.winningOption));
     }
+    dispatch(loadViewerBet(twitchId, response.data.id));
   }
 
   await handleErrors(dispatch, response);
