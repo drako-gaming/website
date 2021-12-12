@@ -13,6 +13,10 @@ const initialState: BetStore = {
     options: [],
   },
   winners: [],
+  bet: {
+    optionsID: "",
+    amount: -1,
+  },
 };//fix dis? and style
 
 const bettingSlice = createSlice({
@@ -67,7 +71,6 @@ export const viewerBet =
 
 
     if(response.status === 200){
-      //TODO: what to do here?
       dispatch(bettingSlice.actions.updateBettingGame(response.data));
       dispatch(bettingSlice.actions.updateBet(BetObj));
     }
@@ -75,13 +78,26 @@ export const viewerBet =
     await handleErrors(dispatch, response);
   };
 
+export const loadViewerBet = 
+  (TwitchId: string, betId: string): AppThunk =>
+  async (dispatch: AppDispatch) => {
+    const response = await axios.get(baseUrl + `betting/${betId}/bets?userId=${TwitchId}`);
+    const BetObj:Bet = {optionsID: response.data.optionId, amount: response.data.amount};
+
+    if(response.status === 200){
+      dispatch(bettingSlice.actions.updateBet(BetObj));
+    }
+
+    await handleErrors(dispatch, response);
+  }
+
 const loadBets =
   (gameId: string, winningOptionId: string): AppThunk =>
   async (dispatch: AppDispatch) => {
     const response = await axios.get(baseUrl + `betting/${gameId}/bets?optionId=${winningOptionId}`, axiosConfig);
 
     if (response.status === 200) {
-      dispatch(bettingSlice.actions.updateBets(response.data));
+      dispatch(bettingSlice.actions.updateBet(response.data));
     }
 
     await handleErrors(dispatch, response);
@@ -154,5 +170,5 @@ export const chooseWinner =
     await handleErrors(dispatch, response);
   };
 
-export const { updateBettingGame, updateBet } = bettingSlice.actions;//
+export const { updateBettingGame } = bettingSlice.actions;
 export default bettingSlice.reducer;

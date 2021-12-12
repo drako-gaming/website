@@ -2,7 +2,7 @@ import { FunctionComponent, useState } from "react";
 import { ButtonGroup, ToggleButton } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../app/store";
-import { viewerBet } from "../betting/bettingSlice";
+import { viewerBet, loadViewerBet } from "../betting/bettingSlice";
 
 /*
 LEARN: 
@@ -58,6 +58,9 @@ const TheBet: FunctionComponent = () => {
   const [state, setState] = useState({ OptionId: "", amount: ""});
   const [checked, setChecked] = useState(false);
   const dispatch = useDispatch();
+  //dispatch(loadViewerBet(profile.twitchId, betting.game.id!))
+  //dispatch(viewerBet(OptId, intAmount, Id));
+
   console.log(betting);
   var BetCheck = [];
   var BetButt = [];
@@ -71,7 +74,7 @@ const TheBet: FunctionComponent = () => {
 
   //TODO: change the look of radio BUTTS
 
-
+console.log(betting);
 
   if (profile.isAuthenticated)
   {

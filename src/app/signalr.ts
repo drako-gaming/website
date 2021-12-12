@@ -2,9 +2,8 @@ import { HubConnectionBuilder, LogLevel, HttpTransportType } from "@microsoft/si
 import { withCallbacks, signalMiddleware } from "redux-signalr";
 import { updateBalance } from "../features/profile/profileSlice";
 import { Profile } from "../features/profile/types";
-import { updateBettingGame, updateBet } from "../features/betting/bettingSlice";//
+import { updateBettingGame } from "../features/betting/bettingSlice";
 import { BettingGame } from "../features/betting/types";
-import { Bet } from "../features/betting/types";//
 
 const connection = new HubConnectionBuilder()
   .configureLogging(LogLevel.Debug)
@@ -25,10 +24,7 @@ const callbacks = withCallbacks()
   })
   .add("BetStatusChanged", (resource: BettingGame) => (dispatch) => {
     dispatch(updateBettingGame(resource));
-  })//
-  .add("ViewerBet", (resource:Bet) => (dispatch) => {
-    dispatch(updateBet(resource));
-  });
+  })
 
 export const signal = signalMiddleware({
   callbacks,

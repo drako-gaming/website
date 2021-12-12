@@ -24,6 +24,7 @@ export interface BetResult {
 export interface BetStore {
   game: BettingGame;
   winners: BetResult[];
+  bet: Bet;
 }
 
 export interface Bet{
