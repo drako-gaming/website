@@ -26,8 +26,8 @@ amount o user
 //TODO: animate
 const TheBet: FunctionComponent = () => {
   const profile = useSelector((state: RootState) => state.profile);
-  const betting = useSelector((state: RootState) => state.betting);//when do i get this info with the whole auth or no auth
-  const [state, setState] = useState({ OptionId: "", amount: ""});
+  const betting = useSelector((state: RootState) => state.betting); //when do i get this info with the whole auth or no auth
+  const [state, setState] = useState({ OptionId: "", amount: "" });
   const [checked, setChecked] = useState(false);
   const dispatch = useDispatch();
   console.log(betting);
@@ -43,12 +43,11 @@ const TheBet: FunctionComponent = () => {
 
   //TODO: change the look of radio BUTTS
 
-  if (profile.isAuthenticated)
-  {
-    if (betting.game.status === "Open" && !betting.game.alreadyBet)//i can do this with less code but it works
-    {
+  if (profile.isAuthenticated) {
+    if (betting.game.status === "Open" && !betting.game.alreadyBet) {
+      //i can do this with less code but it works
       BetCheck.push(
-      <>
+        <>
           <ButtonGroup vertical className="mb-2">
             {betting.game.options.map((item, idx) => (
               <ToggleButton
@@ -59,30 +58,45 @@ const TheBet: FunctionComponent = () => {
                 name="radio"
                 checked={checked}
                 value={item.description}
-                onChange={(e) => {setState({...state, OptionId : item.id!});  setChecked(e.currentTarget.checked);}}
+                onChange={(e) => {
+                  setState({ ...state, OptionId: item.id! });
+                  setChecked(e.currentTarget.checked);
+                }}
               >
-              {item.description}
-            </ToggleButton>
+                {item.description}
+              </ToggleButton>
             ))}
           </ButtonGroup>
-      </>
+        </>
       );
       BetButt.push(
         <div className="input-group mb-3 align-self-end d-flex p-3">
           <div className="input-group-append">
-            <input name="BetAmount" type='number' min="0" max={profile.balance} className="form-control" onChange={e => setState({...state, amount : e.target.value})}></input>
+            <input
+              name="BetAmount"
+              type="number"
+              min="0"
+              max={profile.balance}
+              className="form-control"
+              onChange={(e) => setState({ ...state, amount: e.target.value })}
+            ></input>
           </div>
-          <button className="btn" type="button" style={{backgroundColor: "#00db84"}} onClick={() => DisForm(state.OptionId, state.amount, betting.game.id!, dispatch)}>Bet!</button>
+          <button
+            className="btn"
+            type="button"
+            style={{ backgroundColor: "#00db84" }}
+            onClick={() => DisForm(state.OptionId, state.amount, betting.game.id!, dispatch)}
+          >
+            Bet!
+          </button>
         </div>
       );
-    }
-
-    else if(betting.game.status === "Closed" || betting.game.alreadyBet)
-    {//why art thou not centered?
+    } else if (betting.game.status === "Closed" || betting.game.alreadyBet) {
+      //why art thou not centered?
       BetCheck.push(
         <>
-            <ButtonGroup vertical className="mb-2">
-              {betting.game.options.map((item, idx) => (
+          <ButtonGroup vertical className="mb-2">
+            {betting.game.options.map((item, idx) => (
               <ToggleButton
                 key={idx}
                 id={`radio-${idx}`}
@@ -92,47 +106,38 @@ const TheBet: FunctionComponent = () => {
                 checked={item.id === betting.bet.optionsID}
                 value={item.description}
               >
-              {item.description}
+                {item.description}
               </ToggleButton>
-              ))}
-            </ButtonGroup>
+            ))}
+          </ButtonGroup>
         </>
-        );
+      );
     }
-  }
-  else if(betting.game.status !== "Done" && betting.game.status !== "Cancelled")
-  {
-    for (let index = 0; index < betting.game.options.length; index++) 
-    {
+  } else if (betting.game.status !== "Done" && betting.game.status !== "Cancelled") {
+    for (let index = 0; index < betting.game.options.length; index++) {
       BetCheck.push(<p key={Math.random().toString(36).substr(2, 9)}>{betting.game.options[index].description}</p>);
     }
-  }
-  else if(betting.game.status === "Cancelled")
-  {
+  } else if (betting.game.status === "Cancelled") {
     BetCheck.push(<h2>Betting is cancelled and all point are refunded.</h2>);
-  }
-  else
-  {
-    return (null);
+  } else {
+    return null;
   }
   //FIXME: fix for more than one bet later.
-  return(
+  return (
     <form>
       <div>
         <h5>{betting.game.objective}</h5>
-        <div className="d-flex justify-content-center p-3">
-          {BetCheck}
-        </div>
+        <div className="d-flex justify-content-center p-3">{BetCheck}</div>
       </div>
       {BetButt}
     </form>
   );
-}
+};
 
 //Not the best way but sure is a way
-function DisForm(OptId:string, Amount:string, Id:string, dispatch:AppDispatch) {
+function DisForm(OptId: string, Amount: string, Id: string, dispatch: AppDispatch) {
   var intAmount = Number(Amount);
-  isNaN(intAmount)
+  isNaN(intAmount);
   if (!isNaN(intAmount) && OptId !== "") {
     dispatch(viewerBet(OptId, intAmount, Id));
   }
@@ -140,16 +145,16 @@ function DisForm(OptId:string, Amount:string, Id:string, dispatch:AppDispatch) {
 
 const ViewerBetting: FunctionComponent = () => {
   const twitchBGColor = {
-    backgroundColor: " #18181B"
+    backgroundColor: " #18181B",
   };
   return (
-      <div id="ViewerBetting" className="d-none flex-row col-lg" style={twitchBGColor}>
-        <div className="border-bottom border-secondary p-4"></div>
-        <div className="d-flex justify-content-center">
-          <TheBet/>
-        </div>
-        <div className="d-flex border-bottom border-secondary"></div>
+    <div id="ViewerBetting" className="d-none flex-row col-lg" style={twitchBGColor}>
+      <div className="border-bottom border-secondary p-4"></div>
+      <div className="d-flex justify-content-center">
+        <TheBet />
       </div>
+      <div className="d-flex border-bottom border-secondary"></div>
+    </div>
   );
 };
 ViewerBetting.displayName = "ViewerBetting";

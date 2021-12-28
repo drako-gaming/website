@@ -13,7 +13,7 @@ const initialState: Profile = {
   balance: 0,
   lastTransactionId: 0,
   roles: [],
-  twitchId: ""
+  twitchId: "",
 };
 
 const profileSlice = createSlice({

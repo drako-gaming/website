@@ -24,7 +24,7 @@ const callbacks = withCallbacks()
   })
   .add("BetStatusChanged", (resource: BettingGame) => (dispatch) => {
     dispatch(updateBettingGame(resource));
-  })
+  });
 
 export const signal = signalMiddleware({
   callbacks,

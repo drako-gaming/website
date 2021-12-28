@@ -27,7 +27,7 @@ export interface BetStore {
   bet: Bet;
 }
 
-export interface Bet{
-  optionsID: string,
+export interface Bet {
+  optionsID: string;
   amount: number;
 }
