@@ -5,7 +5,7 @@ const Chat: FunctionComponent = () => {
   var loc = "https://www.twitch.tv/embed/drako/chat?parent=" + window.location.hostname + "&darkpopout";
   //can i move styles to here?
   return (
-    <div>
+    <>
       <ViewerBetting />
       <div id="ovelap-Box">
         <div id="test2" onClick={bettingButt}>
@@ -22,7 +22,7 @@ const Chat: FunctionComponent = () => {
         </div>
       </div>
       <iframe id="chatbox" title="Twitch Chat" src={loc} width="100%" height="100%"></iframe>
-    </div>
+    </>
   );
 };
 
