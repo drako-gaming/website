@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "./store";
 import NotFound from "../common/notFound";
 import Login from "../common/login";
+import ViewerBetting from "../features/betting/ViewerBetting";
 
 const Router: FunctionComponent = () => {
   const profile = useSelector((state: RootState) => state.profile);
@@ -19,10 +20,22 @@ const Router: FunctionComponent = () => {
       <Route path="/" element={<BigScreen />}>
         <Route path="*" element={<NotFound />} />
         <Route path="leaderboard" element={<Leaderboard />} />
+        {authenticated ? <Route path="betting" element={<ViewerBetting />} /> : ""}
         {isModerator ? <Route path="betAdmin" element={<BettingAdmin />} /> : ""}
       </Route>
       <Route path="/popout" element={<Popout />}>
-        {authenticated ? <Route path="*" element={<NotFound />} /> : <Route path="*" element={<div className="text-center"><Login /></div>} />}
+        {authenticated ? (
+          <Route path="*" element={<NotFound />} />
+        ) : (
+          <Route
+            path="*"
+            element={
+              <div className="text-center">
+                <Login />
+              </div>
+            }
+          />
+        )}
         {isModerator ? <Route path="betAdmin" element={<BettingAdmin />} /> : ""}
       </Route>
     </Routes>

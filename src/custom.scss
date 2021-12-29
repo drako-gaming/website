@@ -12,6 +12,14 @@ $font-family-sans-serif: "Open Sans";
 @import '~bootstrap/scss/bootstrap.scss';
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
 
+.text-green {
+  color: $success;
+}
+
+.text-red {
+  color: $danger;
+}
+
 body {
   width: 100%;
   height: 100%;

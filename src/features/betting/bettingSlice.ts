@@ -13,7 +13,7 @@ const initialState: BetStore = {
   },
   winners: [],
   bet: {
-    optionsID: "",
+    optionId: "",
     amount: -1,
   },
 };
@@ -44,7 +44,7 @@ const bettingSlice = createSlice({
     updateBets(state: BetStore, action: PayloadAction<BetResult[]>) {
       return {
         ...state,
-        bets: action.payload,
+        winners: action.payload,
       };
     },
     updateBet(state: BetStore, action: PayloadAction<Bet>) {
@@ -56,20 +56,19 @@ const bettingSlice = createSlice({
   },
 });
 
-export const viewerBet =
-  (option: string, BetAmount: number, betId: string): AppThunk =>
+export const placeBet =
+  (option: string, amount: number, betId: string): AppThunk =>
   async (dispatch: AppDispatch) => {
-    const payload = {
+    const payload: Bet = {
       optionId: option,
-      amount: BetAmount,
+      amount: amount,
     };
 
-    const response = await axios.post(baseUrl + `betting/${betId}/bet`, payload, axiosConfig);
-    const betObj: Bet = { optionsID: payload.optionId, amount: payload.amount };
+    const response = await axios.post(baseUrl + `betting/${betId}/bets`, payload, axiosConfig);
 
     if (response.status === 200) {
       dispatch(bettingSlice.actions.updateBettingGame(response.data));
-      dispatch(bettingSlice.actions.updateBet(betObj));
+      dispatch(bettingSlice.actions.updateBet(payload));
     }
 
     await handleErrors(dispatch, response);
@@ -81,7 +80,7 @@ export const loadViewerBet =
     const response = await axios.get(baseUrl + `betting/${betId}/bets?userId=${twitchId}`);
     const betObj: Bet =
       response.data.length > 0
-        ? { optionsID: response.data[0].optionId, amount: +response.data[0].amount }
+        ? { optionId: response.data[0].optionId, amount: +response.data[0].amount }
         : initialState.bet;
 
     if (response.status === 200) {
@@ -97,7 +96,7 @@ const loadBets =
     const response = await axios.get(baseUrl + `betting/${gameId}/bets?optionId=${winningOptionId}`, axiosConfig);
 
     if (response.status === 200) {
-      dispatch(bettingSlice.actions.updateBet(response.data));
+      dispatch(bettingSlice.actions.updateBets(response.data));
     }
 
     await handleErrors(dispatch, response);
