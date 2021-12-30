@@ -17,6 +17,7 @@ export interface BettingGame {
 export interface BetResult {
   userTwitchId: string;
   userTwitchDisplayName: string;
+  optionId: string;
   amount: number;
   awarded: number;
 }
@@ -30,4 +31,5 @@ export interface BetStore {
 export interface Bet {
   optionId: string;
   amount: number;
+  awarded: number;
 }

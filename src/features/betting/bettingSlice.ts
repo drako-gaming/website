@@ -15,6 +15,7 @@ const initialState: BetStore = {
   bet: {
     optionId: "",
     amount: -1,
+    awarded: 0,
   },
 };
 
@@ -62,6 +63,7 @@ export const placeBet =
     const payload: Bet = {
       optionId: option,
       amount: amount,
+      awarded: 0,
     };
 
     const response = await axios.post(baseUrl + `betting/${betId}/bets`, payload, axiosConfig);
@@ -80,7 +82,7 @@ export const loadViewerBet =
     const response = await axios.get(baseUrl + `betting/${betId}/bets?userId=${twitchId}`);
     const betObj: Bet =
       response.data.length > 0
-        ? { optionId: response.data[0].optionId, amount: +response.data[0].amount }
+        ? { optionId: response.data[0].optionId, amount: +response.data[0].amount, awarded: +response.data[0].awarded }
         : initialState.bet;
 
     if (response.status === 200) {
@@ -173,5 +175,5 @@ export const chooseWinner =
     await handleErrors(dispatch, response);
   };
 
-export const { updateBettingGame } = bettingSlice.actions;
+export const { updateBettingGame, updateBet } = bettingSlice.actions;
 export default bettingSlice.reducer;
