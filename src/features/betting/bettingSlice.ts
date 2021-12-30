@@ -105,13 +105,13 @@ const loadBets =
   };
 
 export const loadBetting =
-  (twitchId: string): AppThunk =>
+  (twitchId: string, isModerator: boolean): AppThunk =>
   async (dispatch: AppDispatch) => {
     const response = await axios.get(baseUrl + "betting", axiosConfig);
 
     if (response.status === 200) {
       dispatch(bettingSlice.actions.updateBettingGame(response.data));
-      if (response.data.winningOption) {
+      if (response.data.winningOption && isModerator) {
         dispatch(loadBets(response.data.id, response.data.winningOption));
       }
       dispatch(loadViewerBet(twitchId, response.data.id));
