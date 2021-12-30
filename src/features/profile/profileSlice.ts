@@ -61,7 +61,7 @@ export const loadProfile = (): AppThunk => async (dispatch: AppDispatch) => {
   dispatch(profileSlice.actions.updateProfile(profile));
   if (profile.isAuthenticated) {
     dispatch(startPresenceTicker());
-    dispatch(loadBetting(profile.twitchId));
+    dispatch(loadBetting(profile.twitchId, profile.roles.includes("moderator")));
   }
 };
 
