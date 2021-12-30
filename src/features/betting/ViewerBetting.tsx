@@ -48,7 +48,10 @@ const ViewerBetting: FunctionComponent = () => {
   if (betting.game.status === "Done") {
     fragments.push(
       <p className="fs-3">
-        Result: <span className="text-info">No</span>
+        Result:{" "}
+        <span className="text-info">
+          {betting.game.options.find((x) => x.id === betting.game.winningOption)?.description}
+        </span>
       </p>
     );
   }

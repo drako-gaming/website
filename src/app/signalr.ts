@@ -23,11 +23,13 @@ const callbacks = withCallbacks()
     );
   })
   .add("BetChanged", (resource: BetResult) => (dispatch) => {
-    dispatch(updateBet({
-      amount: resource.amount,
-      awarded: resource.awarded,
-      optionId: resource.optionId,
-    }));
+    dispatch(
+      updateBet({
+        amount: resource.amount,
+        awarded: resource.awarded,
+        optionId: resource.optionId,
+      })
+    );
   })
   .add("BetStatusChanged", (resource: BettingGame) => (dispatch) => {
     dispatch(updateBettingGame(resource));
