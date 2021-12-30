@@ -147,7 +147,10 @@ const BettingAdmin: FunctionComponent = () => {
           <h1>Betting is done</h1>
           <p className="lead">{betting.game.objective}</p>
           <p className="fs-3">
-            Result: <span className="text-info">No</span>
+            Result:{" "}
+            <span className="text-info">
+              {betting.game.options.find((x) => x.id === betting.game.winningOption)?.description}
+            </span>
           </p>
           <table className="table table-sm">
             <thead>
