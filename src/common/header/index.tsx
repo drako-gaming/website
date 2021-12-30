@@ -7,6 +7,7 @@ import { RootState } from "../../app/store";
 
 const Header: FunctionComponent = () => {
   const profile = useSelector((state: RootState) => state.profile);
+  const isAuthenticated = profile.isAuthenticated;
   const isModerator = profile.roles && profile.roles.includes("moderator");
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
@@ -23,6 +24,13 @@ const Header: FunctionComponent = () => {
             <Nav.Link as={Link} to="/leaderboard">
               Leaderboard
             </Nav.Link>
+            {isAuthenticated ? (
+              <Nav.Link as={Link} to="/betting">
+                Betting
+              </Nav.Link>
+            ) : (
+              ""
+            )}
             {isModerator ? (
               <Nav.Link as={Link} to="/betAdmin">
                 Betting Admin

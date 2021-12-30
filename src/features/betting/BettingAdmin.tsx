@@ -146,6 +146,9 @@ const BettingAdmin: FunctionComponent = () => {
         <div className="text-center">
           <h1>Betting is done</h1>
           <p className="lead">{betting.game.objective}</p>
+          <p className="fs-3">
+            Result: <span className="text-info">No</span>
+          </p>
           <table className="table table-sm">
             <thead>
               <tr>

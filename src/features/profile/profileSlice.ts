@@ -14,6 +14,7 @@ const initialState: Profile = {
   initialBalance: 0,
   lastTransactionId: 0,
   roles: [],
+  twitchId: "",
 };
 
 const profileSlice = createSlice({
@@ -60,7 +61,7 @@ export const loadProfile = (): AppThunk => async (dispatch: AppDispatch) => {
   dispatch(profileSlice.actions.updateProfile(profile));
   if (profile.isAuthenticated) {
     dispatch(startPresenceTicker());
-    dispatch(loadBetting());
+    dispatch(loadBetting(profile.twitchId));
   }
 };
 
