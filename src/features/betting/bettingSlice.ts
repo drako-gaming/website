@@ -13,7 +13,7 @@ const initialState: BetStore = {
   },
   winners: [],
   bet: {
-    optionId: "",
+    optionId: null,
     amount: -1,
     awarded: 0,
   },
