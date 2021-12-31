@@ -23,7 +23,7 @@ const ViewerBetting: FunctionComponent = () => {
   const { dirtyFields, isDirty, isValid } = useFormState({ control });
   const dispatch = useDispatch();
   let fragments: JSX.Element[] = [];
-  const enabled = betting.game.status === "Open" && !betting.game.alreadyBet;
+  const enabled = betting.game.status === "Open" && !betting.bet.optionId;
 
   const onSubmit = async (data: Inputs) => {
     dispatch(placeBet(data.optionId, data.amount, betting.game.id!));
@@ -55,7 +55,7 @@ const ViewerBetting: FunctionComponent = () => {
       </p>
     );
   }
-  if (betting.game.alreadyBet) {
+  if (betting.bet.optionId) {
     fragments.push(
       <p>
         You bet <span className="text-info">{betting.bet.amount}</span> scales on{" "}
@@ -162,7 +162,7 @@ const ViewerBetting: FunctionComponent = () => {
     );
   }
 
-  if (betting.game.alreadyBet && betting.game.status === "Canceled") {
+  if (betting.bet.optionId && betting.game.status === "Canceled") {
     fragments.push(<p>Your bet was refunded.</p>);
   }
   if (!enabled) {

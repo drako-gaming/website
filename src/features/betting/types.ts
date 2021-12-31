@@ -11,7 +11,6 @@ export interface BettingGame {
   status?: string;
   winningOption?: number;
   total?: number;
-  alreadyBet?: boolean;
 }
 
 export interface BetResult {
@@ -29,7 +28,7 @@ export interface BetStore {
 }
 
 export interface Bet {
-  optionId: string;
+  optionId: string|null;
   amount: number;
   awarded: number;
 }
