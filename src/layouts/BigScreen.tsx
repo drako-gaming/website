@@ -16,7 +16,7 @@ const BigScreen: FunctionComponent = () => {
             <Video className={match ? "" : "d-none"} />
             <div id="content" className={match ? "d-none" : "container-fluid content"}>
               <div className="row">
-                <div className="col-xl-4 offset-xl-4">
+                <div className="bigscreen-content">
                   <Outlet />
                 </div>
               </div>

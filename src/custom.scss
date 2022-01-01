@@ -58,22 +58,6 @@ body {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
 }
 
-.popout {
-  width: 450px;
-}
-
-#ovelap-Box
-{
-  position: absolute;
-  cursor: pointer;
-}
-#test2
-{
-  position: relative;
-  top: 13px;
-  right: -15px;
-}
-
 //https://www.w3schools.com/howto/howto_css_hide_arrow_number.asp
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
@@ -102,4 +86,9 @@ input[type=number] {
 
 .content-wrapper {
   max-height: calc(100vh - 76px);
+}
+
+.bigscreen-content {
+  @extend .container;
+  max-width: 720px;
 }
