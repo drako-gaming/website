@@ -28,7 +28,7 @@ export interface BetStore {
 }
 
 export interface Bet {
-  optionId: string|null;
+  optionId: string | null;
   amount: number;
   awarded: number;
 }
