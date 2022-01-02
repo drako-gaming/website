@@ -75,7 +75,34 @@ input[type=number] {
   overflow-y: auto;
   overflow-x: auto;
   max-height: calc(100vh - 76px);
- }
+}
+
+.video {
+  @extend .flex-row;
+  @extend .col-lg;
+  @extend .d-flex;
+  @extend .align-items-center;
+  @extend .m-0;
+  @extend .p-0;
+}
+
+.chat {
+  @extend .flex-row;
+  @extend .col-lg;
+  @extend .m-0;
+  @extend .p-0;
+}
+
+@include media-breakpoint-down(lg) {
+  .video {
+    max-height: calc(100vw * 9 / 16);
+    height: calc(100vw * 9 / 16);
+  }
+
+  .chat {
+    min-height: calc(100vh - 100vw * 9 / 16 - 76px);
+  }
+}
 
 @include media-breakpoint-up(lg) {
   .chat {

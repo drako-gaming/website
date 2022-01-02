@@ -12,7 +12,7 @@ const BigScreen: FunctionComponent = () => {
       <Header />
       <div className="container-fluid d-flex h-100 mh-100 flex-column">
         <div className="row flex-fill d-flex flex-wrap flex-lg-nowrap h-100 content-wrapper">
-          <div className="flex-row col-lg d-flex align-items-center m-0 p-0">
+          <div className="video">
             <Video className={match ? "" : "d-none"} />
             <div id="content" className={match ? "d-none" : "container-fluid content"}>
               <div className="row">
@@ -22,11 +22,7 @@ const BigScreen: FunctionComponent = () => {
               </div>
             </div>
           </div>
-          <div
-            className={
-              match ? "flex-row col-lg d-flex flex-fill m-0 p-0 chat" : "d-none d-lg-flex flex-row m-0 p-0 chat"
-            }
-          >
+          <div className="chat">
             <Chat />
           </div>
         </div>
